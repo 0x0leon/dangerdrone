@@ -1,0 +1,15 @@
+{
+  "name": "dangerdrone_backend",
+  "version": "1.0.0",
+  "description": "tello-drone controlling software w/ the boys + gps + face detection",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
