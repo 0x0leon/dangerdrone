@@ -2,9 +2,12 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+// socke io 
+
 app.get('/', (req, res) => {
   res.json({message:'test'})
 })
+
 
 
 app.listen(port, () => {
