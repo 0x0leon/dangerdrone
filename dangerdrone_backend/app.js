@@ -2,23 +2,25 @@ const express = require('express')
 const Tello = require("tello-drone");
 const cors = require("cors")
 const app = express()
-
-app.use(cors)
 const http = require('http')
-const server = http.createServer(app)
 const { Server } = require("socket.io")
+
+const server = http.createServer(app)
+app.use(cors)
+
+// io object for events 
 const io = new Server({
     cors: {
         origin: "http://localhost:3000"
     }
 });
 
+// port socket server
 const socketIOPort = 5001
+
+// port express server
 const expressPort = 3001
 
-
-
-console.log("test")
 // All option parameters are optional, default values shown
 const drone = new Tello({
     host: "192.168.10.1",     // manually set the host.
@@ -27,11 +29,7 @@ const drone = new Tello({
     skipOK: false,            // dont send the OK message.
 })
 
-// Sends a command to the drone
 
-// socke io 
-
-var battery = 0
 
 drone.on("connection", () => {
     console.log("Connected to drone");
@@ -40,25 +38,34 @@ drone.on("connection", () => {
 var stateX = ""
 drone.on("state", state => {
     // console.log("Recieved State > ", state);
+
+    // emit state
     io.emit("droneData", state)
     stateX = state
 });
 
+// get if there is connection to frontend 
 io.on('connection', (socket) => {
+
+    // print when user connected
     console.log('a user connected');
 
+    // check on dataX receive
     socket.on("dataX", (data) => {
         console.log(data)
     })
 
+    // check if up
     socket.on("up", (data) => {
         drone.send("up", 10)
     })
 
+    // check if down
     socket.on("down", (data) => {
         drone.send("down", 10)
     })
 
+    // check if emergency
     socket.on("emergency", (data) => {
         drone.send("emergency")
     })
@@ -66,28 +73,13 @@ io.on('connection', (socket) => {
 
 });
 
-
-
-
-app.get('/', (req, res) => {
-    drone.send("battery?")
-
-    res.json({ batteryy: battery })
-})
-
-
-
-app.get('/command/:command', function () {
-
-})
-
-
-
-
+// socketio server
 io.listen(socketIOPort, () => {
     console.log(`listening on *: ${socketIOPort}`);
 });
 
+
+// express server
 app.listen(expressPort, () => {
     console.log(`Example app listening on port ${expressPort}`)
 })
