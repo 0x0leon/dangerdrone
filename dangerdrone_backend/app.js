@@ -49,8 +49,6 @@ io.on('connection', (socket) => {
 
     socket.on("dataX", (data) => {
         console.log(data)
-
-        
     })
 
     socket.on("up", (data) => {
