@@ -53,21 +53,15 @@ io.on('connection', (socket) => {
     // check on dataX receive
     socket.on("dataX", (data) => {
         console.log(data)
-    })
 
-    // check if up
-    socket.on("up", (data) => {
-        drone.send("up", 10)
-    })
+        if(data === "up"){
+            drone.send("up", 10)
+        } else if (data === "down"){
+            drone.send("down")
+        } else if (data === "emergency"){
+            drone.send("emergency")
+        }
 
-    // check if down
-    socket.on("down", (data) => {
-        drone.send("down", 10)
-    })
-
-    // check if emergency
-    socket.on("emergency", (data) => {
-        drone.send("emergency")
     })
 
 

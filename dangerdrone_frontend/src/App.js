@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client'
 import { Button, Container } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const url = "http://localhost:5001"
 const socket = io(url)
@@ -12,17 +12,9 @@ const App = () => {
 	const [connected, setConnected] = useState(false)
 	const [droneData, setDroneData] = useState("")
 
-	const up = (x) => {
-		socket.emit('up', x)
-	}
-
-	const down = () => {
-		console.log("down")
-		socket.emit('down', 10)
-	}
-
-	const emergency = () => {
-		socket.emit('emergency', "")
+	const sendToDrone = (command) => {
+		console.log(command)
+		socket.emit("dataX", command)
 	}
 
 	useEffect(() => {
@@ -49,9 +41,9 @@ const App = () => {
 			<h4>drone Z {droneData["z"]}</h4>
 			<h4>drone roll {droneData["roll"]}</h4>
 			<h4>drone baro {droneData["baro"]}</h4>
-			<Button onClick={up}>up</Button>
-			<Button onClick={down}>down</Button>
-			<Button onClick={emergency}>stop</Button>
+			<Button onClick={() => sendToDrone("up")}>up</Button>
+			<Button onClick={() => sendToDrone("down")}>down</Button>
+			<Button onClick={() => sendToDrone("emergency")}>stop</Button>
 		</Container>
 	);
 }
