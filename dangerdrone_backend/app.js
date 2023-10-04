@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
     // check on dataX receive
     socket.on("dataX", (data) => {
         console.log(data)
-
+    })
     socket.on("up", (data) => {
         drone.send("up", 10)
     })
