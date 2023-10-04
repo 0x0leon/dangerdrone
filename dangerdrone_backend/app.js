@@ -55,14 +55,23 @@ io.on('connection', (socket) => {
         console.log(data)
     })
     socket.on("up", (data) => {
-        drone.send("up", 10)
+        // console.log("takeoff")
+        drone.send("command")
+        drone.send("takeoff")
     })
 
     socket.on("down", (data) => {
-        drone.send("down 10", 10)
+        console.log("down")
+        drone.send("down", 10)
+    })
+
+    socket.on("land", (data) => {
+        drone.send("command")
+        drone.send("land")
     })
 
     socket.on("emergency", (data) => {
+        drone.send("command")
         drone.send("emergency")
     })
 

@@ -13,16 +13,17 @@ const App = () => {
 	const [droneData, setDroneData] = useState("")
 
 	const up = (x) => {
-		console.log("down")
-		socket.emit('up', x)
+		console.log("up")
+		socket.emit("up", "")
 	}
 
 	const down = () => {
 		console.log("down")
-		socket.emit('down', 10)
+		socket.emit("down", "")
 	}
 
 	const emergency = () => {
+		console.log("emergency")
 		socket.emit('emergency', "")
 	}
 
