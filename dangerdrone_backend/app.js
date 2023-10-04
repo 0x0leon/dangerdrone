@@ -41,7 +41,7 @@ drone.on("state", state => {
 
     // emit state
     io.emit("droneData", state)
-    stateX = state
+    // stateX = state
 });
 
 // get if there is connection to frontend 
@@ -54,14 +54,16 @@ io.on('connection', (socket) => {
     socket.on("dataX", (data) => {
         console.log(data)
 
-        if(data === "up"){
-            drone.send("up", 10)
-        } else if (data === "down"){
-            drone.send("down")
-        } else if (data === "emergency"){
-            drone.send("emergency")
-        }
+    socket.on("up", (data) => {
+        drone.send("up", 10)
+    })
 
+    socket.on("down", (data) => {
+        drone.send("down 10", 10)
+    })
+
+    socket.on("emergency", (data) => {
+        drone.send("emergency")
     })
 
 

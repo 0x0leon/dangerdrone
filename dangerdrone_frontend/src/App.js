@@ -12,9 +12,18 @@ const App = () => {
 	const [connected, setConnected] = useState(false)
 	const [droneData, setDroneData] = useState("")
 
-	const sendToDrone = (command) => {
-		console.log(command)
-		socket.emit("dataX", command)
+	const up = (x) => {
+		console.log("down")
+		socket.emit('up', x)
+	}
+
+	const down = () => {
+		console.log("down")
+		socket.emit('down', 10)
+	}
+
+	const emergency = () => {
+		socket.emit('emergency', "")
 	}
 
 	useEffect(() => {
@@ -41,9 +50,9 @@ const App = () => {
 			<h4>drone Z {droneData["z"]}</h4>
 			<h4>drone roll {droneData["roll"]}</h4>
 			<h4>drone baro {droneData["baro"]}</h4>
-			<Button onClick={() => sendToDrone("up")}>up</Button>
-			<Button onClick={() => sendToDrone("down")}>down</Button>
-			<Button onClick={() => sendToDrone("emergency")}>stop</Button>
+			<Button onClick={up}>up</Button>
+			<Button onClick={down}>down</Button>
+			<Button onClick={emergency}>stop</Button>
 		</Container>
 	);
 }
